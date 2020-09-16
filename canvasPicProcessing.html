@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html></html>
+
+<html>
+  <head>
+    <title>canvas picture processing</title>
+    <script type="text/javascript"></script>
+  </head>
+  <head>
+    <title>canvas picture processing</title>
+    <script type="text/javascript">
+      var cvs, ctx;
+      window.onload = function () {
+        cvs = document.getElementById('cvs');
+        ctx = cvs.getContext('2d');
+        //載入影像
+        /*
+      	var img=new Image();
+      	img.src='fatcat.jpg';
+      	img.onload=function(){ //註冊load事件，圖片載入後才做繪製
+      		ctx.drawImage(this, 0, 0, cvs.width, cvs.height);
+      	}; */
+      };
+      function invertColor() {
+        var pixels = this.ctx.getImageData(0, 0, cvs.width, cvs.height); //ImageData物件
+        var data = pixels.data; //data屬性是個陣列，存放所有pixel attribute，one pixel has four(bytes)
+        //one pixel has four(bytes)，分別是 r、g、b、a(alpha) (範圍:0~255)
+        for (var i = 0; i < data.length; i += 4) {
+          //loop thorugh every pixel data
+          data[i] = 255 - data[i]; //red
+          data[i + 1] = 255 - data[i + 1]; // green
+          data[i + 2] = 255 - data[i + 2]; // blue
+        }
+        ctx.putImageData(pixels, 0, 0);
+      }
+
+      function loadFile(input) {
+        var file = input.files[0];
+        var src = URL.createObjectURL(file);
+        var img = new Image();
+        img.src = src;
+        image.onload = function () {
+          ctx.drawImage(this, 0, 0, cvs.width, cvs.height);
+        };
+      }
+    </script>
+  </head>
+  <body>
+    <div>
+      <input type="file" onchange="loadFile(this);" />
+      <button onclick="invertColor();">Invertbtn</button>
+    </div>
+    <canvas
+      id="cvs"
+      width="800"
+      height="600"
+      style="border: 1px solid #000000"
+    ></canvas>
+  </body>
+</html>
