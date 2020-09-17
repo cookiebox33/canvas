@@ -44,11 +44,19 @@
           ctx.drawImage(this, 0, 0, cvs.width, cvs.height);
         };
       }
+	  function saveFile(){
+	  var link= document.getElementById('download');
+	  link.download='image.jpg';
+	  link.href=cvs.toDataURL=('image/jpeg');
+	  link.click();
+		}
     </script>
   </head>
   <body>
     <div>
       <input type="file" onchange="loadFile(this);" />
+	  <button onclick='saveFile();'> saveFile </button>
+	  <a id='download'></a>
       <button onclick="invertColor();">Invertbtn</button>
     </div>
     <canvas
